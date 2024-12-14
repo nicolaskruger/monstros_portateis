@@ -18,5 +18,5 @@ export const useGameLoop = (tick: () => void, render: () => void) => {
     return () => {
       if (gamePace.current) clearTimeout(gamePace.current);
     };
-  }, []);
+  }, [render, tick]);
 };
