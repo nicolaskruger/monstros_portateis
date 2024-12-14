@@ -6,12 +6,12 @@ const SIZE = 8 * 32;
 const calcSize = () => MULTI * SIZE;
 
 export default function Home() {
-  const { canvas, control } = useGame();
+  const { canvas, onKeyDown, onKeyUp } = useGame();
 
   return (
     <main
-      onKeyDown={() => (control.current = true)}
-      onKeyUp={() => (control.current = false)}
+      onKeyDown={onKeyDown}
+      onKeyUp={onKeyUp}
       tabIndex={-1}
       className="size-full flex justify-center items-center"
     >
