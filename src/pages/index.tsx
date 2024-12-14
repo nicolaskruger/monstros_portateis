@@ -1,4 +1,5 @@
 import { useGameLoop } from "@/hooks/use_game_loop";
+import { useGame } from "@/provider/game_provider";
 import { useRef } from "react";
 
 const MULTI = 3;
@@ -7,7 +8,7 @@ const SIZE = 8 * 32;
 const calcSize = () => MULTI * SIZE;
 
 export default function Home() {
-  const canvas = useRef<HTMLCanvasElement>(null);
+  const { canvas } = useGame();
   const control = useRef<boolean>(false);
   const player = useRef<number>(0);
 
