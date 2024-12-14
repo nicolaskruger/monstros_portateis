@@ -1,14 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useGameLoop } from "@/hooks/use_game_loop";
+import { useRef } from "react";
 
 const MULTI = 3;
 const SIZE = 8 * 32;
-const FPS = 60;
 
 const calcSize = () => MULTI * SIZE;
 
 export default function Home() {
   const canvas = useRef<HTMLCanvasElement>(null);
-  const gamePace = useRef<NodeJS.Timeout>(null);
   const control = useRef<boolean>(false);
   const player = useRef<number>(0);
 
@@ -22,21 +21,7 @@ export default function Home() {
     if (control.current) player.current++;
   };
 
-  useEffect(() => {
-    const gameLoop = () => {
-      const start = performance.now();
-      tick();
-      render();
-      gamePace.current = setTimeout(
-        gameLoop,
-        1000 / FPS - (performance.now() - start)
-      );
-    };
-    gameLoop();
-    return () => {
-      if (gamePace.current) clearTimeout(gamePace.current);
-    };
-  }, []);
+  useGameLoop(tick, render);
 
   return (
     <main
