@@ -1,3 +1,4 @@
+import { useGameLoop } from "@/hooks/use_game_loop";
 import { useControl, useGame } from "@/provider/game_provider";
 
 const MULTI = 3;
@@ -8,6 +9,8 @@ const calcSize = () => MULTI * SIZE;
 export default function Home() {
   const { canvas } = useGame();
   const control = useControl();
+  useGameLoop();
+
   return (
     <main
       {...control}
