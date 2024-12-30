@@ -1,27 +1,17 @@
 import { FPS } from "@/constant/game";
-import { useCanvas, useControl } from "@/provider/game_provider";
 import { useEffect, useRef } from "react";
+import { usePlayer } from "./use_player";
 
 export const useGameLoop = () => {
   const gamePace = useRef<NodeJS.Timeout>(null);
-  const control = useControl();
-  const canvas = useCanvas();
 
-  const x = useRef<number>(0);
-  const y = useRef<number>(0);
+  const [tickPlayer, renderPlayer] = usePlayer();
 
   const render = () => {
-    if (!canvas.current) return;
-    const ctx = canvas.current.getContext("2d")!;
-    ctx.fillStyle = "red";
-    ctx.fillRect(x.current, y.current, 40, 40);
+    renderPlayer();
   };
   const tick = () => {
-    const { RIGHT, DOWN, LEFT, UP } = control.control.current;
-    if (RIGHT) x.current++;
-    if (DOWN) y.current++;
-    if (LEFT) x.current--;
-    if (UP) y.current--;
+    tickPlayer();
   };
 
   useEffect(() => {

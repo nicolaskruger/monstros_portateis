@@ -1,7 +1,7 @@
 import { useGameLoop } from "@/hooks/use_game_loop";
 import { useControl, useGame } from "@/provider/game_provider";
 
-const MULTI = 3;
+export const MULTI = 3;
 const SIZE = 8 * 32;
 
 const calcSize = () => MULTI * SIZE;
