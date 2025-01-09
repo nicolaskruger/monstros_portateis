@@ -2,6 +2,11 @@ import { useCanvas, useControl } from "@/provider/game_provider";
 import { useSolid } from "./use_solid";
 
 export const usePlayer = () => {
+  const getImg = () => {
+    const img = new Image(8, 16);
+    img.src = "trevosinha/trevosinha.png";
+    return img;
+  };
   const { getX, getY, getWith, getHeight, solid } = useSolid({
     x: 0,
     y: 0,
@@ -13,8 +18,7 @@ export const usePlayer = () => {
   const render = () => {
     if (!canvas.current) return;
     const ctx = canvas.current.getContext("2d")!;
-    ctx.fillStyle = "red";
-    ctx.fillRect(getX(), getY(), getWith(), getHeight());
+    ctx.drawImage(getImg(), getX(), getY());
   };
   const tick = () => {
     const { RIGHT, DOWN, LEFT, UP } = control.control.current;
