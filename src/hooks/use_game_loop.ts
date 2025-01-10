@@ -1,13 +1,15 @@
 import { FPS } from "@/constant/game";
 import { useEffect, useRef } from "react";
 import { usePlayer } from "./use_player";
+import { useClearScreen } from "./use_clear_screen";
 
 export const useGameLoop = () => {
   const gamePace = useRef<NodeJS.Timeout>(null);
-
+  const clear = useClearScreen();
   const [tickPlayer, renderPlayer] = usePlayer();
 
   const render = () => {
+    clear();
     renderPlayer();
   };
   const tick = () => {
