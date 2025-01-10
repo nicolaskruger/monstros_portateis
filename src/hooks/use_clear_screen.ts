@@ -1,5 +1,5 @@
-import { useScreen } from "@/provider/game_provider";
 import { useEffect, useRef } from "react";
+import { useScreen } from "./use_screen";
 
 export const useClearScreen = () => {
   const { getFullScreen, putImageDataRoot, toDataUrl, drawImage } = useScreen();
