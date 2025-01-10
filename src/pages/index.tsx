@@ -1,10 +1,11 @@
 import { useGameLoop } from "@/hooks/use_game_loop";
 import { useControl, useGame } from "@/provider/game_provider";
 
-export const MULTI = 3;
-const SIZE = 8 * 32;
-
-const calcSize = () => MULTI * SIZE;
+export const MULTI = 5;
+const WIDTH = 8 * 32;
+const HEIGHT = 8 * 32;
+const calcWidth = () => MULTI * WIDTH;
+const calcHeight = () => MULTI * HEIGHT;
 
 export default function Home() {
   const { canvas } = useGame();
@@ -15,9 +16,14 @@ export default function Home() {
     <main
       {...control}
       tabIndex={-1}
-      className="size-full flex justify-center items-center"
+      className="w-screen h-screen flex justify-center items-center"
     >
-      <canvas ref={canvas} width={calcSize()} height={calcSize()} />
+      <canvas
+        ref={canvas}
+        className="h-full"
+        width={calcWidth()}
+        height={calcHeight()}
+      />
     </main>
   );
 }
