@@ -21,11 +21,11 @@ const keyboardToControl: EnumDictionary<string, ControlKeys> = {
   ç: "B",
 };
 
-type EnumDictionary<T extends string | symbol | number, U> = {
+export type EnumDictionary<T extends string | symbol | number, U> = {
   [K in T]: U;
 };
 
-type ControlState = EnumDictionary<ControlKeys, boolean>;
+export type ControlState = EnumDictionary<ControlKeys, boolean>;
 
 export const useConfigControl = () => {
   const control = useRef<ControlState>({} as ControlState);
