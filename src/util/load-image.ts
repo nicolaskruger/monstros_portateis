@@ -24,9 +24,10 @@ const dataToMatrix = ({ data, width }: ImageData): rgba[][] => {
     .reduce(groupByLength(width), [[]] as number[][][]) as rgba[][];
 };
 
-export const loadImage = (src: string, width: number, height: number) => {
+export const loadImage = async (src: string, width: number, height: number) => {
   const img = new Image(width, height);
   img.src = src;
+
   const genFinalImg = () => {
     const finalImg = new Image(img.width * MULTI, img.height * MULTI);
 
@@ -51,15 +52,19 @@ export const loadImage = (src: string, width: number, height: number) => {
       putImageData: (img: ImageData) => ctx.putImageData(img, 0, 0),
     };
   };
-  const ctx = generateContext();
-  ctx.drawImage();
-  const finalImgData = ctx.getFullImageData();
 
-  multiRgba(dataToMatrix(ctx.getImageData()))
-    .flat(2)
-    .forEach((val, i) => (finalImgData.data[i] = val));
+  return new Promise<HTMLImageElement>((resolve) => {
+    img.onload = () => {
+      const ctx = generateContext();
+      ctx.drawImage();
+      const finalImgData = ctx.getFullImageData();
 
-  ctx.putImageData(finalImgData);
+      multiRgba(dataToMatrix(ctx.getImageData()))
+        .flat(2)
+        .forEach((val, i) => (finalImgData.data[i] = val));
 
-  return genFinalImg();
+      ctx.putImageData(finalImgData);
+      resolve(genFinalImg());
+    };
+  });
 };

@@ -2,6 +2,7 @@ import { useCanvas, useControl } from "@/provider/game_provider";
 import { useSolid } from "./use_solid";
 import { loadImage } from "@/util/load-image";
 import { ControlState, EnumDictionary } from "./use_config_control";
+import { useCallback, useEffect, useRef } from "react";
 
 const controlAngle = (control: ControlState) => {
   const genKey = ({ DOWN, RIGHT, LEFT, UP }: Partial<ControlState>) =>
@@ -25,6 +26,7 @@ export const usePlayer = () => {
   const getImg = () => {
     return loadImage("trevosinha/trevosinha.png", 8, 16);
   };
+  const playerImg = useRef<HTMLImageElement>(null);
   const { getX, getY, solid } = useSolid({
     x: 0,
     y: 0,
@@ -33,10 +35,19 @@ export const usePlayer = () => {
   });
   const canvas = useCanvas();
   const control = useControl();
+
+  const fetchPlayerImg = useCallback(async () => {
+    playerImg.current = await getImg();
+  }, []);
+
+  useEffect(() => {
+    fetchPlayerImg();
+  }, [fetchPlayerImg]);
+
   const render = () => {
     if (!canvas.current) return;
     const ctx = canvas.current.getContext("2d")!;
-    ctx.drawImage(getImg(), getX(), getY());
+    ctx.drawImage(playerImg.current || new Image(), getX(), getY());
   };
   const tick = () => {
     try {
