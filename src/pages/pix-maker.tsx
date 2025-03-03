@@ -6,7 +6,7 @@ const pixW = 8;
 const pixH = 8;
 const lightGray = rgb(169, 169, 169);
 const darkGray = rgb(105, 105, 105);
-const onePix = 1;
+const pixSize = 50;
 
 const matrixGen = (w: number, h: number) => {
   const matrix: [number, number][] = [];
@@ -30,7 +30,7 @@ const PixMaker: FC = () => {
 
     matrixGen(pixW, pixH).forEach(([i, j]) => {
       ctx.fillStyle = `${pattern[(i + j) % 2]}`;
-      ctx.fillRect(j, i, onePix, onePix);
+      ctx.fillRect(j * pixSize, i * pixSize, pixSize, pixSize);
     });
   };
 
@@ -42,7 +42,12 @@ const PixMaker: FC = () => {
     <div w-screen h-screen>
       <h1>Pix Maker</h1>
       <main>
-        <canvas width={pixW} height={pixH} ref={canvas} id="pix-maker" />
+        <canvas
+          width={pixW * pixSize}
+          height={pixH * pixSize}
+          ref={canvas}
+          id="pix-maker"
+        />
       </main>
     </div>
   );
